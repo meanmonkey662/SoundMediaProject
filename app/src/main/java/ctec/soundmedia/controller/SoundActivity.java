@@ -8,6 +8,10 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.*;
+import android.graphics.Color;
+import android.graphics.Color;
+import android.widget.RelativeLayout;
+
 
 public class SoundActivity extends Activity implements Runnable
 {
@@ -19,6 +23,8 @@ public class SoundActivity extends Activity implements Runnable
     private MediaPlayer soundPlayer;
     private SeekBar soundSeekBar;
     private Thread soundThread;
+    private Button colorButton;
+    private RelativeLayout appbackground;
 
 
     @Override
@@ -33,11 +39,32 @@ public class SoundActivity extends Activity implements Runnable
         soundSeekBar = (SeekBar) findViewById(R.id.soundSeekBar);
         videoButton = (Button) findViewById(R.id.videoButton);
         soundPlayer = MediaPlayer.create(this.getBaseContext(), R.raw.music);
+        colorButton = (Button) findViewById(R.id.colorButton);
+        appbackground = (RelativeLayout) findViewById(R.id.background);
 
         setupListeners();
 
         soundThread = new Thread(this);
         soundThread.start();
+    }
+
+    private void changeColors()
+    {
+        int redColor;
+        int greenColor;
+        int blueColor;
+
+        redColor = (int) (Math.random() * 256);
+        greenColor = (int) (Math.random() * 256);
+        blueColor = (int) (Math.random() *256);
+
+        appbackground.setBackgroundColor(Color.rgb(redColor, greenColor, blueColor));
+
+        redColor = (int) (Math.random() * 256);
+        greenColor = (int) (Math.random() * 256);
+        blueColor = (int) (Math.random() *256);
+
+        colorButton.setBackgroundColor(Color.rgb(redColor, greenColor, blueColor));
     }
 
     private void setupListeners()
@@ -48,6 +75,15 @@ public class SoundActivity extends Activity implements Runnable
             public void onClick(View v)
             {
                 soundPlayer.start();
+            }
+        });
+
+        colorButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View buttonView)
+            {
+                changeColors();
             }
         });
 
